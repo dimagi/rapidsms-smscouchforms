@@ -1,0 +1,52 @@
+Couch-based XForm storage for RapidSMS.
+
+Let's you combine interactive SMS form sessions with couchdb storage for 
+data saving and export.
+
+Dependencies:
+
+rapidsms-smsforms: https://github.com/dimagi/rapidsms-smsforms
+ - touchforms: https://github.com/dimagi/touchforms
+couchforms: https://github.com/dimagi/couchforms
+couchexport: https://github.com/dimagi/couchexport
+ - django-soil: https://github.com/dimagi/django-soil
+
+
+
+Also you must have the following line(s) in your settings.py 
+(update to match your configuration, and use a real dbname)
+
+COUCH_DATABASE = "http://localhost:5984/[dbname]"
+XFORMS_POST_URL = "%s/_design/couchforms/_update/xform/" % COUCH_DATABASE
+
+Also make sure you have the following in your INSTALLED_APPS:
+
+INSTALLED_APPS = [
+    # all your other apps go here
+    ... 
+    "couchforms",
+    "couchexport",
+    "smsforms",
+    "smscouchforms",
+    "touchforms"
+]
+
+And in your COUCHDB_APPS:
+
+COUCHDB_APPS = [
+    # all your other couchdb apps go here
+    ... 
+    'couchforms', 
+    'couchexport'
+]
+
+
+Finally, make sure you include the following in your site's urls.py
+
+urlpatterns = patterns('',
+    # all your other urls 
+    ... 
+    (r'^smsforms/', include('smsforms.urls')),
+    (r'^smscouchforms/', include('smscouchforms.urls')),
+    (r'^couchexport/', include("couchexport.urls"))
+)
