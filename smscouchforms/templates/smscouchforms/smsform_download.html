@@ -1,27 +1,25 @@
 {% extends "layout.html" %}
 {% block content %}
-<h2>Download Data</h2>
+<h2>Download SMS Form Data</h2>
 <table>
-{% for xform in forms %}
+{% for trigger in triggers %}
     {% if forloop.first %}
     <thead>
         <!--th>Name</th-->
-        <th>Namespace</th>
+        <th>Keyword</th>
         <th>Created</th>
-        <th>Version</th>
-        <th>UI Version</th>
-        <th>File</th>
-        <th colspan="2">Download Data</th>
+        <th>Sessions</th>
+        <th>XForm File</th>
+        <th colspan="2">Submitted Data</th>
     </thead>
     {% endif %}
     <tr class="{% cycle "odd" "even" %}">
-        <td>{{ xform.namespace }}</td>
-        <td>{{ xform.created }}</td>
-        <td>{{ xform.version }}</td>
-        <td>{{ xform.uiversion }}</td>
-        <td><a href="{% url xform_download xform.id %}">download</a></td>
-        <td><a href="{% url model_download_excel %}?export_tag={{ xform.namespace }}&format=html">web preview</a></td>
-        <td><a href="{% url model_download_excel %}?export_tag={{ xform.namespace }}&format=xlsx">excel download</a></td>
+        <td>{{ trigger.trigger_keyword }}</td>
+        <td>{{ trigger.xform.created }}</td>
+        <td>{{ trigger.num_sessions }}</td>
+        <td><a href="{% url xform_download trigger.xform.id %}">download</a></td>
+        <td><a href="{% url model_download_excel %}?export_tag={{ trigger.xform.namespace }}&format=html">web preview</a></td>
+        <td><a href="{% url model_download_excel %}?export_tag={{ trigger.xform.namespace }}&format=xlsx">excel download</a></td>
     </tr>
     {% empty %}
     <tr>Sorry, no forms here.</tr>
