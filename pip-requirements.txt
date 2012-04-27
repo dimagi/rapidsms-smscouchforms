@@ -1,0 +1,3 @@
+-e git://github.com/dimagi/dimagi-utils.git#egg=dimagi-utils
+openpyxl
+unidecode
