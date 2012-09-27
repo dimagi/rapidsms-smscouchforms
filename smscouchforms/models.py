@@ -13,6 +13,9 @@ class FormReferenceBase(models.Model):
     @property
     def form(self):
         return XFormInstance.get(self.form_id)
+
+    def get_connection(self):
+        return self.session.connection
     
     class Meta:
         abstract = True
